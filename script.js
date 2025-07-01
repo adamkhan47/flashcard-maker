@@ -1,10 +1,24 @@
+const copy = text => navigator.clipboard.writeText(text);
 function importQuizlet() {
-
+    const textareacontent = document.getElementById('inputText').value;
+    document.getElementById('inputText').value = textareacontent.replaceAll("	", "|");
 }
 function exportFunc() {
-
+    let textareacontent = document.getElementById('inputText').value;
+    textareacontent = textareacontent.replaceAll("|", "	");
+    copy(textareacontent);
 }
 function save() {
+    const {term,def, successful} = convertToGoodFormat();
+    if (successful) {
+        // lets store in localstorage 1 for now
+        localStorage.setItem('localStorage1', JSON.stringify({term,def}));
+        alert("Saved!");
+        //const stored = JSON.parse(localStorage.getItem('localStorage1')); 
+        //alert("HUHHH: " + stored.term + stored.def); 
+    }
+}
+function convertToGoodFormat() {
     const textareacontent = document.getElementById('inputText').value;
     const lines = textareacontent.split('\n').length;
     let term = [];
@@ -24,8 +38,9 @@ function save() {
             break;
         }
     }
-    if (successful) {
-        alert(term);
-        alert(def);
-    }
+    return {
+        term,
+        def,
+        successful
+    };   
 }

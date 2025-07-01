@@ -11,11 +11,40 @@ function exportFunc() {
 function save() {
     const {term,def, successful} = convertToGoodFormat();
     if (successful) {
+        //old system
         // lets store in localstorage 1 for now
-        localStorage.setItem('localStorage1', JSON.stringify({term,def}));
-        alert("Saved!");
-        //const stored = JSON.parse(localStorage.getItem('localStorage1')); 
-        //alert("HUHHH: " + stored.term + stored.def); 
+        //localStorage.setItem('localStorage1', JSON.stringify({term,def}));
+        //alert("Saved!");
+        
+        //new system
+        // lets have the user save a name to the flashcard and then save that to something that stores all flashcards
+        const stored =JSON.parse(localStorage.getItem('listOfAllCurrentFlashCards')) || [];
+        let varr = true;
+        
+        while (varr === true) {
+            let nameOfLocalStorageThing = prompt("Enter a name for this flashcard.");
+            if (prompt === null) {varr = false; break;}
+            else { try {
+                if (stored.includes(nameOfLocalStorageThing) === false) {
+                    varr = false;
+                    stored.push(nameOfLocalStorageThing);
+                    localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify(stored))
+                    localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
+                    alert("Saved!");
+                }
+            }
+            catch(error) {
+                console.error(error);
+                varr = false;
+                let names = [];
+                names.push(nameOfLocalStorageThing);
+                localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify({names}))
+                localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
+                alert("Saved!");
+            }}
+            
+        }
+        
     }
 }
 function convertToGoodFormat() {

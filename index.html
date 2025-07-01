@@ -7,12 +7,13 @@
 </head>
 <body>
     <h1>Flashcard Maker</h1> <br>
-    <h2>Make flashcards, use a Quizlet flashcard. Built for Flashcard Loader</h2> <br> <br>
-    <h2>To use Quizlet: Make sure you own a Quizlet (copy it or make one) and then click the three dots and click Export. <br> After that, paste in the text you got there into the box and click Import from Quizlet.<br> Or, put in your term first, seperate it with "|", then put in the definition.</h2> <br> <br>
-    <textarea id="text" name="text" rows="4" cols="50">.</textarea> <br> <br>
+    <h2>Make flashcards, or use a existing Quizlet flashcard. Built for <a href="https://adamkhan47.github.io/flashcard-reader">Flashcard Reader</a></h2> <br> <br>
+    <h2>To use Quizlet: Make sure you own a Quizlet (copy it or make one) and then click the three dots on the top right of the flashcard page and click Export. <br> After that, paste in the text you got there into the box and click Import from Quizlet.<br> </h2> <br> <h2 class="boldd">Or, in the box, put in your term first, separate it with "|" with no spaces, then put in the definition.</h2> <br>
+    <h2>For documentation, <a href="/readup.html">here.</a></h2> <br> <br>
+    <textarea id="inputText" name="inputText" rows="4" cols="50">.</textarea> <br> <br>
     <button onclick="importQuizlet()">Import from Quizlet</button>
-    <button onclick="importQuizlet()">Export</button>
-    <button onclick="importQuizlet()">Save</button> 
+    <button onclick="exportFunc()">Export To Clipboard</button>
+    <button onclick="save()">Save</button> 
     <script src="script.js"></script>
 </body>
 </html>

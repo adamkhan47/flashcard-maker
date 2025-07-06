@@ -9,7 +9,7 @@ function exportFunc() {
     copy(textareacontent);
 }
 function save() {
-    const {term,def, successful} = convertToGoodFormat();
+    let {successful} = convertToGoodFormat();
     if (successful) {
         //old system
         // lets store in localstorage 1 for now
@@ -18,34 +18,51 @@ function save() {
         
         //new system
         // lets have the user save a name to the flashcard and then save that to something that stores all flashcards
-        const stored =JSON.parse(localStorage.getItem('listOfAllCurrentFlashCards')) || [];
-        let varr = true;
+
+        //old frontend system for saving
+        //let nameOfLocalStorageThing = prompt("Enter a name for this flashcard.");
+
+        //new gui frontend system is really just a copy and paste from flashcard-reader, buttons are now tweaked to be a ul.
+        document.getElementById('popup').style.visibility = 'visible';
+        const buttonContainer = document.getElementById('popup');
+        buttonContainer.innerHTML = '<h3>&nbsp&nbspCurrent Flashcards:</h3> <br><ul id="flashcard-list"> </ul>';
+        let listOfFlashcards = JSON.parse(localStorage.getItem('listOfAllCurrentFlashCards'));
+        let ul = document.getElementById('flashcard-list');
+        try {
+            for (let i = 0; i<listOfFlashcards.length; i++) {
+                let li = document.createElement('li');
+                li.classList.add('flashcard-item');
+                li.textContent = listOfFlashcards[i];
+                ul.appendChild(li);
+            }
+        } catch(error) {console.log("No saves present" + error)};
+        buttonContainer.innerHTML += '<textarea id="saveText" name ="saveText" rows="1" cols="20"></textarea><button id="hide" onclick="save2()">Save</button>';            
         
-        while (varr === true) {
-            let nameOfLocalStorageThing = prompt("Enter a name for this flashcard.");
-            console.log(prompt);
-            if (nameOfLocalStorageThing === null || nameOfLocalStorageThing === "") {varr = false; console.log("left"); break;} 
-            try {
-                if (stored.includes(nameOfLocalStorageThing) === false) {
-                    varr = false;
-                    stored.push(nameOfLocalStorageThing);
-                    localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify(stored))
-                    localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
-                    alert("Saved!");
-                }
-            }
-            catch(error) {
-                console.error(error);
-                varr = false;
-                let names = [];
-                names.push(nameOfLocalStorageThing);
-                localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify({names}))
-                localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
-                alert("Saved!");
-            }
-            
+    }
+}
+function save2() {
+    let {term,def} = convertToGoodFormat();
+    const stored =JSON.parse(localStorage.getItem('listOfAllCurrentFlashCards')) || [];
+    let nameOfLocalStorageThing = document.getElementById('saveText').value;
+    if (nameOfLocalStorageThing === null || nameOfLocalStorageThing === "") {console.log("left"); return;} 
+    try {
+        if (stored.includes(nameOfLocalStorageThing) === false) {
+            varr = false;
+            stored.push(nameOfLocalStorageThing);
+            localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify(stored))
+            localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
+            alert("Saved!");
         }
-        
+    }
+    catch(error) {
+        console.error(error);
+        varr = false;
+        let names = [];
+        names.push(nameOfLocalStorageThing);
+        localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify({names}))
+        localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
+        alert("Saved!");
+        save();
     }
 }
 function convertToGoodFormat() {

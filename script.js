@@ -23,8 +23,9 @@ function save() {
         
         while (varr === true) {
             let nameOfLocalStorageThing = prompt("Enter a name for this flashcard.");
-            if (prompt === null) {varr = false; break;}
-            else { try {
+            console.log(prompt);
+            if (nameOfLocalStorageThing === null || nameOfLocalStorageThing === "") {varr = false; console.log("left"); break;} 
+            try {
                 if (stored.includes(nameOfLocalStorageThing) === false) {
                     varr = false;
                     stored.push(nameOfLocalStorageThing);
@@ -41,7 +42,7 @@ function save() {
                 localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify({names}))
                 localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
                 alert("Saved!");
-            }}
+            }
             
         }
         

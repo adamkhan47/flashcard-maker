@@ -55,6 +55,8 @@ textarea {
     background-color: rgb(41,41,41);
     color: rgb(183,121,248);
     width: 28rem;
+    max-width:45rem;
+    max-height:15.938rem;
 }
 .boldd {
     font-weight: bold;
@@ -86,6 +88,7 @@ h3 {
     max-width: 20rem; 
     max-height: 2rem
 }
+
 #hide {
     margin-left: 1rem;
 }

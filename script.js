@@ -58,6 +58,7 @@ function save2() {
             localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
             alert("Saved!");
             save();
+            hideSave()
         }
         else if(stored.includes(nameOfLocalStorageThing) === true) {
             if (window.confirm('Do you want to overwrite the "' + nameOfLocalStorageThing+ '" flashcard?')) {
@@ -65,6 +66,7 @@ function save2() {
                 localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify(stored))
                 localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
                 alert("Saved!");
+                hideSave()
             }
         }
     }
@@ -77,6 +79,7 @@ function save2() {
         localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
         alert("Saved!");
         save();
+        hideSave()
     }
 }
 function clearAll() {
@@ -85,7 +88,11 @@ function clearAll() {
         save();
     }
 }
-
+function hideSave() {
+    const buttonContainer = document.getElementById('popup');
+    document.getElementById('popup').style.visibility = 'hidden';
+    buttonContainer.innerHTML = "";
+}
 function convertToGoodFormat() {
     const textareacontent = document.getElementById('inputText').value;
     const lines = textareacontent.split('\n').length;

@@ -35,7 +35,12 @@ function save() {
                 li.textContent = listOfFlashcards[i];
                 ul.appendChild(li);
             }
-        } catch(error) {console.log("No saves present" + error)};
+        } catch(error) {
+            let li = document.createElement('li');
+            li.classList.add('flashcard-item');
+            li.textContent = "No flashcards found.";
+            ul.appendChild(li);
+        };
         buttonContainer.innerHTML += '<textarea id="saveText" name ="saveText" rows="1" cols="20"></textarea><button id="hide" onclick="save2()">Save</button><button id="hide" onclick="clearAll()">Clear All Flashcards</button>';            
         
     }
@@ -52,6 +57,15 @@ function save2() {
             localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify(stored))
             localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
             alert("Saved!");
+            save();
+        }
+        else if(stored.includes(nameOfLocalStorageThing) === true) {
+            if (window.confirm('Do you want to overwrite the "' + nameOfLocalStorageThing+ '" flashcard?')) {
+                varr = false;
+                localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify(stored))
+                localStorage.setItem(nameOfLocalStorageThing, JSON.stringify({term,def}));
+                alert("Saved!");
+            }
         }
     }
     catch(error) {
@@ -68,9 +82,10 @@ function save2() {
 function clearAll() {
     if (window.confirm("Are you sure you want to clear all flashcards?")) {
         localStorage.clear();
-        location.reload();
+        save();
     }
 }
+
 function convertToGoodFormat() {
     const textareacontent = document.getElementById('inputText').value;
     const lines = textareacontent.split('\n').length;

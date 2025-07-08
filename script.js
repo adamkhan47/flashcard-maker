@@ -119,3 +119,20 @@ function convertToGoodFormat() {
         successful
     };   
 }
+function importAll() {
+    
+}
+function exportAll() {
+    let listOfFlashcards = JSON.parse(localStorage.getItem('listOfAllCurrentFlashCards'));
+    let text = "" + listOfFlashcards;
+    for (let i = 0; i<listOfFlashcards.length; i++) {
+        text+= "\n" + JSON.stringify(JSON.parse(localStorage.getItem(listOfFlashcards[i])));
+    }
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "flashcardsave.txt";
+    a.click();
+}

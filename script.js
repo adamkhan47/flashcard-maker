@@ -119,8 +119,27 @@ function convertToGoodFormat() {
         successful
     };   
 }
-function importAll() {
-    
+async function importAll() {
+    if (window.confirm("You will clear all data to import, is that fine?") === false) {return;}
+    localStorage.clear();
+    const [fileHandle] = await window.showOpenFilePicker();
+    const file = await fileHandle.getFile();
+    let contents = await file.text();  // This is the file contents as a string
+    console.log(contents);
+    const keysLine = contents.substring(0, contents.indexOf("\n"));
+    const listOfFlashcards = keysLine.split(",");
+    localStorage.setItem('listOfAllCurrentFlashCards', JSON.stringify(listOfFlashcards));
+    contents = contents.substring(contents.indexOf("\n") + 1);
+    for (let i = 0; i<listOfFlashcards.length; i++) {
+        if(contents.indexOf("\n") > 0) {
+            localStorage.setItem(listOfFlashcards[i], contents.substring(0,contents.indexOf("\n")));
+            contents = contents.substring(contents.indexOf("\n") + 1);
+        }
+        else {
+            localStorage.setItem(listOfFlashcards[i], contents);
+        }
+    }
+
 }
 function exportAll() {
     let listOfFlashcards = JSON.parse(localStorage.getItem('listOfAllCurrentFlashCards'));

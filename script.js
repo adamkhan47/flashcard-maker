@@ -1,4 +1,3 @@
-const copy = text => navigator.clipboard.writeText(text);
 function importQuizlet() {
     const textareacontent = document.getElementById('inputText').value;
     document.getElementById('inputText').value = textareacontent.replaceAll("	", "|");
@@ -6,7 +5,7 @@ function importQuizlet() {
 function exportFunc() {
     let textareacontent = document.getElementById('inputText').value;
     textareacontent = textareacontent.replaceAll("|", "	");
-    copy(textareacontent);
+    navigator.clipboard.writeText(textareacontent);
 }
 function save() {
     let {successful} = convertToGoodFormat();
@@ -25,7 +24,7 @@ function save() {
         //new gui frontend system is really just a copy and paste from flashcard-reader, buttons are now tweaked to be a ul.
         document.getElementById('popup').style.visibility = 'visible';
         const buttonContainer = document.getElementById('popup');
-        buttonContainer.innerHTML = '<h3>&nbsp&nbspCurrent Flashcards:</h3> <br><ul id="flashcard-list"> </ul>';
+        buttonContainer.innerHTML = '<h3>&nbsp&nbspCurrent Flashcard Sets:</h3> <br><ul id="flashcard-list"> </ul>';
         let listOfFlashcards = JSON.parse(localStorage.getItem('listOfAllCurrentFlashCards'));
         let ul = document.getElementById('flashcard-list');
         try {

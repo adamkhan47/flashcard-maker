@@ -10,18 +10,6 @@ function exportFunc() {
 function save() {
     let {successful} = convertToGoodFormat();
     if (successful) {
-        //old system
-        // lets store in localstorage 1 for now
-        //localStorage.setItem('localStorage1', JSON.stringify({term,def}));
-        //alert("Saved!");
-        
-        //new system
-        // lets have the user save a name to the flashcard and then save that to something that stores all flashcards
-
-        //old frontend system for saving
-        //let nameOfLocalStorageThing = prompt("Enter a name for this flashcard.");
-
-        //new gui frontend system is really just a copy and paste from flashcard-reader, buttons are now tweaked to be a ul.
         document.getElementById('popup').style.visibility = 'visible';
         const buttonContainer = document.getElementById('popup');
         buttonContainer.innerHTML = '<h3>&nbsp&nbspCurrent Flashcard Sets:</h3> <br><ul id="flashcard-list"> </ul>';
